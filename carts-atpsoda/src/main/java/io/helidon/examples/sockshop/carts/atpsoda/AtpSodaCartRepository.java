@@ -46,7 +46,7 @@ public class AtpSodaCartRepository implements CartRepository {
 
     @PostConstruct
     void configure() {
-        System.our.println("AtpSodaCartRepository - configure()");
+        System.out.println("AtpSodaCartRepository - configure()");
         System.out.println("");
         carts.createIndex(Indexes.hashed("customerId"));
     }
@@ -55,7 +55,7 @@ public class AtpSodaCartRepository implements CartRepository {
     public Cart getOrCreateCart(String customerId) {
         System.out.println("\n");
         System.out.println("---------------------------");
-        System.our.println("AtpSodaCartRepository - getOrCreateCart()");
+        System.out.println("AtpSodaCartRepository - getOrCreateCart()");
         System.out.println("customerId: " + customerId);
         Cart cart = carts.find(eq("customerId", customerId)).first();
         System.out.println("cart: " + cart);
@@ -77,7 +77,7 @@ public class AtpSodaCartRepository implements CartRepository {
     public boolean mergeCarts(String targetId, String sourceId) {
         System.out.println("\n");
         System.out.println("---------------------------");
-        System.our.println("AtpSodaCartRepository - mergeCarts()");
+        System.out.println("AtpSodaCartRepository - mergeCarts()");
         System.out.println("targetId: " + targetId);
         System.out.println("sourceId: " + sourceId);
 
@@ -99,7 +99,7 @@ public class AtpSodaCartRepository implements CartRepository {
     public List<Item> getItems(String cartId) {
         System.out.println("\n");
         System.out.println("---------------------------");
-        System.our.println("AtpSodaCartRepository - getItems()");
+        System.out.println("AtpSodaCartRepository - getItems()");
         System.out.println("cartId: " + cartId);
         System.out.println("---------------------------");
         System.out.println("\n");
@@ -110,7 +110,7 @@ public class AtpSodaCartRepository implements CartRepository {
     public Item getItem(String cartId, String itemId) {
         System.out.println("\n");
         System.out.println("---------------------------");
-        System.our.println("AtpSodaCartRepository - getItems()");
+        System.out.println("AtpSodaCartRepository - getItems()");
         System.out.println("cartId: " + cartId);
         System.out.println("itemId: " + itemId);
         System.out.println("---------------------------");
@@ -122,7 +122,7 @@ public class AtpSodaCartRepository implements CartRepository {
     public Item addItem(String cartId, Item item) {
         System.out.println("\n");
         System.out.println("---------------------------");
-        System.our.println("AtpSodaCartRepository - addItem()");
+        System.out.println("AtpSodaCartRepository - addItem()");
         System.out.println("cartId: " + cartId);
         System.out.println("item: " + item);
         
@@ -144,7 +144,7 @@ public class AtpSodaCartRepository implements CartRepository {
         Item result = cart.update(item);
         System.out.println("\n");
         System.out.println("---------------------------");
-        System.our.println("AtpSodaCartRepository - updateItem()");
+        System.out.println("AtpSodaCartRepository - updateItem()");
         System.out.println("cart: " + cart);
         System.out.println("result: " + result);
         System.out.println("cartId: " + cartId);
@@ -161,7 +161,7 @@ public class AtpSodaCartRepository implements CartRepository {
         Cart cart = getOrCreateCart(cartId);
         System.out.println("\n");
         System.out.println("---------------------------");
-        System.our.println("AtpSodaCartRepository - deleteItem()");
+        System.out.println("AtpSodaCartRepository - deleteItem()");
         System.out.println("cartId: " + cartId);
         System.out.println("itemId: " + itemId);
         System.out.println("---------------------------");
