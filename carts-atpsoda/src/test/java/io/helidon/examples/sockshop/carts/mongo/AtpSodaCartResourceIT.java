@@ -5,7 +5,7 @@
  * http://oss.oracle.com/licenses/upl.
  */
 
-package io.helidon.examples.sockshop.carts.mongo;
+package io.helidon.examples.sockshop.carts.atpsoda;
 
 import io.helidon.examples.sockshop.carts.CartResourceIT;
 
@@ -13,5 +13,5 @@ import io.helidon.examples.sockshop.carts.CartResourceIT;
  * Integration tests for {@link io.helidon.examples.sockshop.carts.CartResource},
  * using MongoDB for persistence.
  */
-public class MongoCartResourceIT extends CartResourceIT {
+public class AtpSodaCartResourceIT extends CartResourceIT {
 }

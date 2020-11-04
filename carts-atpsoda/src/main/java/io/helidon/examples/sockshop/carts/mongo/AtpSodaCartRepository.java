@@ -5,7 +5,7 @@
  * http://oss.oracle.com/licenses/upl.
  */
 
-package io.helidon.examples.sockshop.carts.mongo;
+package io.helidon.examples.sockshop.carts.atpsoda;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import static javax.interceptor.Interceptor.Priority.APPLICATION;
 @Alternative
 @Priority(APPLICATION)
 @Traced
-public class MongoCartRepository implements CartRepository {
+public class AtpSodaCartRepository implements CartRepository {
 
     private MongoCollection<Cart> carts;
 

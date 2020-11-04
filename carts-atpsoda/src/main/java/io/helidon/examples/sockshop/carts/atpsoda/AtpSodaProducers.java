@@ -5,7 +5,7 @@
  * http://oss.oracle.com/licenses/upl.
  */
 
-package io.helidon.examples.sockshop.carts.mongo;
+package io.helidon.examples.sockshop.carts.atpsoda;
 
 import java.util.Collections;
 
@@ -38,7 +38,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 @SuppressWarnings("deprecation")
 @ApplicationScoped
 @Log
-public class MongoProducers {
+public class AtpSodaProducers {
 
     /**
      * Default MongoDB host to connect to.

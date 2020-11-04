@@ -5,7 +5,7 @@
  * http://oss.oracle.com/licenses/upl.
  */
 
-package io.helidon.examples.sockshop.carts.mongo;
+package io.helidon.examples.sockshop.carts.atpsoda;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -36,7 +36,7 @@ import static javax.interceptor.Interceptor.Priority.APPLICATION;
 @Alternative
 @Priority(APPLICATION)
 @Traced
-public class MongoCartRepositoryAsync implements CartRepositoryAsync {
+public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
 
     private MongoCollection<Cart> carts;
 

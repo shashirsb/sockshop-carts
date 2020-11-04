@@ -5,21 +5,21 @@
  * http://oss.oracle.com/licenses/upl.
  */
 
-package io.helidon.examples.sockshop.carts.mongo;
+package io.helidon.examples.sockshop.carts.atpsoda;
 
 import io.helidon.examples.sockshop.carts.CartRepository;
 import io.helidon.examples.sockshop.carts.CartRepositoryTest;
 
-import static io.helidon.examples.sockshop.carts.mongo.MongoProducers.*;
+import static io.helidon.examples.sockshop.carts.mongo.AtpSodaProducers.*;
 
 /**
  * Integration tests for {@link io.helidon.examples.sockshop.carts.mongo.MongoCartRepository}.
  */
-class MongoCartRepositoryIT extends CartRepositoryTest {
+class AtpSodaCartRepositoryIT extends CartRepositoryTest {
     public CartRepository getCartRepository() {
         String host = System.getProperty("db.host","localhost");
         int    port = Integer.parseInt(System.getProperty("db.port","27017"));
 
-        return new MongoCartRepository(carts(db(client(host, port))));
+        return new AtpSodaCartRepository(carts(db(client(host, port))));
     }
 }
