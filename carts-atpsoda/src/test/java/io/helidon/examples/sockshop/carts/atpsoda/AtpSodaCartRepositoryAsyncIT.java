@@ -11,9 +11,9 @@ import io.helidon.examples.sockshop.carts.CartRepository;
 import io.helidon.examples.sockshop.carts.CartRepositoryTest;
 import io.helidon.examples.sockshop.carts.SyncCartRepository;
 
-import static io.helidon.examples.sockshop.carts.mongo.AtpSodaProducers.asyncCarts;
-import static io.helidon.examples.sockshop.carts.mongo.AtpSodaProducers.asyncClient;
-import static io.helidon.examples.sockshop.carts.mongo.AtpSodaProducers.asyncDb;
+import static io.helidon.examples.sockshop.carts.atpsoda.AtpSodaProducers.asyncCarts;
+import static io.helidon.examples.sockshop.carts.atpsoda.AtpSodaProducers.asyncClient;
+import static io.helidon.examples.sockshop.carts.atpsoda.AtpSodaProducers.asyncDb;
 
 /**
  * Integration tests for {@link MongoCartRepositoryAsync}.
