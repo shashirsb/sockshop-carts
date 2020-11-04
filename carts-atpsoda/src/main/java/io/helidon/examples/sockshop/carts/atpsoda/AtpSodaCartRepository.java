@@ -40,7 +40,7 @@ public class AtpSodaCartRepository implements CartRepository {
     private MongoCollection<Cart> carts;
 
     @Inject
-    MongoCartRepository(MongoCollection<Cart> carts) {
+    AtpSodaCartRepository(MongoCollection<Cart> carts) {
         this.carts = carts;
     }
 
