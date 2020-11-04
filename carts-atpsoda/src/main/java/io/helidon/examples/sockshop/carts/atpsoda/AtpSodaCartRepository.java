@@ -46,16 +46,25 @@ public class AtpSodaCartRepository implements CartRepository {
 
     @PostConstruct
     void configure() {
+        System.our.println("AtpSodaCartRepository - configure()");
+        System.out.println("");
         carts.createIndex(Indexes.hashed("customerId"));
     }
 
     @Override
     public Cart getOrCreateCart(String customerId) {
+        System.out.println("\n");
+        System.out.println("---------------------------");
+        System.our.println("AtpSodaCartRepository - getOrCreateCart()");
+        System.out.println("customerId: " + customerId);
         Cart cart = carts.find(eq("customerId", customerId)).first();
+        System.out.println("cart: " + cart);
         if (cart == null) {
             cart = new Cart(customerId);
             carts.insertOne(cart);
         }
+        System.out.println("---------------------------");
+        System.out.println("\n");
         return cart;
     }
 
@@ -66,39 +75,83 @@ public class AtpSodaCartRepository implements CartRepository {
 
     @Override
     public boolean mergeCarts(String targetId, String sourceId) {
+        System.out.println("\n");
+        System.out.println("---------------------------");
+        System.our.println("AtpSodaCartRepository - mergeCarts()");
+        System.out.println("targetId: " + targetId);
+        System.out.println("sourceId: " + sourceId);
+
         Cart source = carts.findOneAndDelete(eq("customerId", sourceId));
+        System.out.println("source: " + source);
         if (source != null) {
             Cart target = getOrCreateCart(targetId);
             target.merge(source);
             carts.replaceOne(eq("customerId", targetId), target);
             return true;
         }
+
+        System.out.println("---------------------------");
+        System.out.println("\n");
         return false;
     }
 
     @Override
     public List<Item> getItems(String cartId) {
+        System.out.println("\n");
+        System.out.println("---------------------------");
+        System.our.println("AtpSodaCartRepository - getItems()");
+        System.out.println("cartId: " + cartId);
+        System.out.println("---------------------------");
+        System.out.println("\n");
         return getOrCreateCart(cartId).getItems();
     }
 
     @Override
     public Item getItem(String cartId, String itemId) {
+        System.out.println("\n");
+        System.out.println("---------------------------");
+        System.our.println("AtpSodaCartRepository - getItems()");
+        System.out.println("cartId: " + cartId);
+        System.out.println("itemId: " + itemId);
+        System.out.println("---------------------------");
+        System.out.println("\n");
         return getOrCreateCart(cartId).getItem(itemId);
     }
 
     @Override
     public Item addItem(String cartId, Item item) {
+        System.out.println("\n");
+        System.out.println("---------------------------");
+        System.our.println("AtpSodaCartRepository - addItem()");
+        System.out.println("cartId: " + cartId);
+        System.out.println("item: " + item);
+        
         Cart cart = getOrCreateCart(cartId);
-
+        System.out.println("cart: " + cart);
         Item result = cart.add(item);
+        System.out.println("result: " + result);
+
         carts.replaceOne(eq("customerId", cartId), cart);
+        System.out.println("---------------------------");
+        System.out.println("\n");
         return result;
     }
 
     @Override
     public Item updateItem(String cartId, Item item) {
+        
         Cart cart = getOrCreateCart(cartId);
         Item result = cart.update(item);
+        System.out.println("\n");
+        System.out.println("---------------------------");
+        System.our.println("AtpSodaCartRepository - updateItem()");
+        System.out.println("cart: " + cart);
+        System.out.println("result: " + result);
+        System.out.println("cartId: " + cartId);
+        System.out.println("item: " + item);
+        System.out.println("---------------------------");
+        System.out.println("\n");
+
         carts.replaceOne(eq("customerId", cartId), cart);
         return result;
     }
@@ -106,6 +159,13 @@ public class AtpSodaCartRepository implements CartRepository {
     @Override
     public void deleteItem(String cartId, String itemId) {
         Cart cart = getOrCreateCart(cartId);
+        System.out.println("\n");
+        System.out.println("---------------------------");
+        System.our.println("AtpSodaCartRepository - deleteItem()");
+        System.out.println("cartId: " + cartId);
+        System.out.println("itemId: " + itemId);
+        System.out.println("---------------------------");
+        System.out.println("\n");
         cart.remove(itemId);
         carts.replaceOne(eq("customerId", cartId), cart);
     }
