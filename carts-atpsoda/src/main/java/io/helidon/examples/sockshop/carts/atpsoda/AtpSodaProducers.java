@@ -153,7 +153,7 @@ public class AtpSodaProducers {
      * @return a {@code MongoClient} instance
      */
     static MongoClient client(String host, int port) {
-        log.info(format("Connecting to MongoDB on host %s:%d", host, port));
+        //log.info(format("Connecting to MongoDB on host %s:%d", host, port));
         MongoClientSettings settings = createClientSettings(host, port);
         return MongoClients.create(settings);
     }
@@ -167,7 +167,7 @@ public class AtpSodaProducers {
      * @return a {@code MongoClient} instance
      */
     static com.mongodb.async.client.MongoClient asyncClient(String host, int port) {
-        log.info(format("Connecting to MongoDB on host %s:%d using async client", host, port));
+        //log.info(format("Connecting to MongoDB on host %s:%d using async client", host, port));
         MongoClientSettings settings = createClientSettings(host, port);
         return com.mongodb.async.client.MongoClients.create(settings);
     }

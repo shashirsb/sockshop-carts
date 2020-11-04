@@ -35,7 +35,7 @@ import static javax.interceptor.Interceptor.Priority.APPLICATION;
 @Alternative
 @Priority(APPLICATION)
 @Traced
-public class MongoCartRepository implements CartRepository {
+public class AtpSodaCartRepository implements CartRepository {
 
     private MongoCollection<Cart> carts;
 
