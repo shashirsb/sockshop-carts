@@ -48,7 +48,7 @@ public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
     @Override
     public CompletionStage<Cart> getOrCreateCart(String customerId) {
         CompletableFuture<Cart> future = new CompletableFuture<>();
-
+        System.out.println("AtpSodaCartRepositoryAsync - getOrCreateCart()");
         carts.find(eq("customerId", customerId))
                 .first((cart, t1) -> {
                     if (t1 != null) future.completeExceptionally(t1);
@@ -69,7 +69,7 @@ public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
     @Override
     public CompletionStage<Void> deleteCart(String customerId) {
         CompletableFuture<Void> future = new CompletableFuture<>();
-
+        System.out.println("AtpSodaCartRepositoryAsync - deleteCart()");
         carts.deleteOne(eq("customerId", customerId), (deleteResult, throwable) -> {
             if (throwable != null) future.completeExceptionally(throwable);
             else future.complete(null);
@@ -81,7 +81,7 @@ public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
     @Override
     public CompletionStage<Boolean> mergeCarts(String targetId, String sourceId) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
-
+        System.out.println("AtpSodaCartRepositoryAsync - mergeCarts()");
         carts.findOneAndDelete(eq("customerId", sourceId), (source, t1) -> {
             if (t1 != null) future.completeExceptionally(t1);
             else if (source != null) {
@@ -104,18 +104,20 @@ public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
 
     @Override
     public CompletionStage<List<Item>> getItems(String cartId) {
+        System.out.println("AtpSodaCartRepositoryAsync - getItems()");
         return getOrCreateCart(cartId).thenApply(Cart::getItems);
     }
 
     @Override
     public CompletionStage<Item> getItem(String cartId, String itemId) {
+        System.out.println("AtpSodaCartRepositoryAsync - getItem()");
         return getOrCreateCart(cartId).thenApply(cart -> cart.getItem(itemId));
     }
 
     @Override
     public CompletionStage<Item> addItem(String cartId, Item item) {
         CompletableFuture<Item> future = new CompletableFuture<>();
-
+        System.out.println("AtpSodaCartRepositoryAsync - addItem()");
         getOrCreateCart(cartId).whenComplete((cart, t1) -> {
             if (t1 != null) future.completeExceptionally(t1);
             else {
@@ -133,7 +135,7 @@ public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
     @Override
     public CompletionStage<Item> updateItem(String cartId, Item item) {
         CompletableFuture<Item> future = new CompletableFuture<>();
-
+        System.out.println("AtpSodaCartRepositoryAsync - updateItem()");
         getOrCreateCart(cartId).whenComplete((cart, t1) -> {
             if (t1 != null) future.completeExceptionally(t1);
             else {
@@ -151,7 +153,7 @@ public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
     @Override
     public CompletionStage<Void> deleteItem(String cartId, String itemId) {
         CompletableFuture<Void> future = new CompletableFuture<>();
-
+        System.out.println("AtpSodaCartRepositoryAsync - deleteItem()");
         getOrCreateCart(cartId).whenComplete((cart, t1) -> {
             if (t1 != null) future.completeExceptionally(t1);
             else {
