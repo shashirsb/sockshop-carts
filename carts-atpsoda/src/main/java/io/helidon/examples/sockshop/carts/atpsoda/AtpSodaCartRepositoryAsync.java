@@ -41,7 +41,7 @@ public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
     private MongoCollection<Cart> carts;
 
     @Inject
-    MongoCartRepositoryAsync(MongoCollection<Cart> carts) {
+    AtpSodaCartRepositoryAsync(MongoCollection<Cart> carts) {
         this.carts = carts;
     }
 

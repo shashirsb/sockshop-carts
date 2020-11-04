@@ -21,7 +21,6 @@
 
     <modules>
         <module>carts-core</module>
-        <module>carts-mongo</module>
         <module>carts-atpsoda</module>
     </modules>
 
