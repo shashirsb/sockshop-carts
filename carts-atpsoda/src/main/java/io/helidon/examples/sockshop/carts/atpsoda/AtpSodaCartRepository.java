@@ -407,7 +407,7 @@ public class AtpSodaCartRepository implements CartRepository {
                       OracleCursor c  = col.find().filter(filterSpecTarget).getCursor();
                       
                       try {
-                        OracleDocument resultDoc;
+                     
         
                         while (c.hasNext()) {
         
