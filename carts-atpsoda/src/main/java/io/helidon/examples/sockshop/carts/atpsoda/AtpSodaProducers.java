@@ -5,7 +5,7 @@
  * http://oss.oracle.com/licenses/upl.
  */
 
-package io.helidon.examples.sockshop.shipping.atpsoda;
+package io.helidon.examples.sockshop.carts.atpsoda;
 
 import java.util.Collections;
 
