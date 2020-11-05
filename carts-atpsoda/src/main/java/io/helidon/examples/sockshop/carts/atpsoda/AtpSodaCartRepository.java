@@ -99,8 +99,7 @@ import io.helidon.examples.sockshop.carts.atpsoda.AtpSodaProducers;
 @Traced
 public class AtpSodaCartRepository implements CartRepository {
 
-    private OracleCollection<Cart> carts;
-
+    
     public static AtpSodaProducers asp = new AtpSodaProducers();
     public static OracleDatabase db = asp.dbConnect();
 
