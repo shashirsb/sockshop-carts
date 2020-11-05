@@ -150,15 +150,14 @@ public class AtpSodaCartRepository implements CartRepository {
                 OracleDocument filterSpec = this.db.createDocumentFromString("{ \"customerId\" : \"" + customerId + "\"}");
                 System.out.println("filterSpec: -------" + filterSpec.getContentAsString());
 
-                OracleCursor c = col.find().filter(filterSpec).getCursor();
+                OracleDocument resultDoc = col.find().filter(filterSpec).getOne();
 
-                try {
-                    OracleDocument resultDoc;
-    
-                    while (c.hasNext()) {
+     
+                    
+                    if (resultDoc !=  null) {
     
                         // String orderId, String carrier, String trackingNumber, LocalDate deliveryDate
-                        resultDoc = c.next();
+                    
                         
                         
                         Gson gson = new Gson();
@@ -176,10 +175,7 @@ public class AtpSodaCartRepository implements CartRepository {
                         System.out.println("\n");
 
                                         }
-                } finally {
-                    // IMPORTANT: YOU MUST CLOSE THE CURSOR TO RELEASE RESOURCES.
-                    if (c != null) c.close();
-                }
+            
                 
        
               
