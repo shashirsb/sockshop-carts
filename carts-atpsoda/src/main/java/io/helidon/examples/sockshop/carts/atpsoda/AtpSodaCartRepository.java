@@ -157,7 +157,8 @@ public class AtpSodaCartRepository implements CartRepository {
                 cart=gson.fromJson(oraDoc.getContentAsString(), Cart.class);
                 		 if (cart == null) {
                 	            cart = new Cart(customerId);
-                	            carts.insertOne(cart);
+                	            OracleDocument doc = db.createDocumentFromString(gson.toJson(cart));
+                	            col.insert(doc);                	     
                 	        }
       
                
