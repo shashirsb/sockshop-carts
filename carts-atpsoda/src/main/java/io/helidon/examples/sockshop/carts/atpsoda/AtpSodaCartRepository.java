@@ -154,7 +154,7 @@ public class AtpSodaCartRepository implements CartRepository {
                 
        
                 Gson gson = new Gson();
-                cart=gson.fromJson(oraDoc.getContentAsString(), Cart);
+                cart=gson.fromJson(oraDoc.getContentAsString(), Cart.class);
                 		 if (cart == null) {
                             System.out.println("------------INSIDE CART INSERTING START---------------");
                 	            cart = new Cart(customerId);
@@ -243,7 +243,7 @@ public class AtpSodaCartRepository implements CartRepository {
                 col.find().filter(filterSpec).remove();
                 
                 Gson gson = new Gson();
-                source=gson.fromJson(oraDocSource.getContentAsString(), Cart);
+                source=gson.fromJson(oraDocSource.getContentAsString(), Cart.class);
                 
               if (source != null) {
               target = getOrCreateCart(targetId);
