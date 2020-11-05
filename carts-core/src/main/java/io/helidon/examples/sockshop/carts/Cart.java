@@ -147,4 +147,10 @@ public class Cart implements Serializable {
         other.getItems().forEach(item -> add(new Item(item)));
         return this;
     }
+
+	public List<Item> getItems() {
+		List itemList;
+        items.stream().forEach(itemList::add);
+		return itemList;
+	}
 }
