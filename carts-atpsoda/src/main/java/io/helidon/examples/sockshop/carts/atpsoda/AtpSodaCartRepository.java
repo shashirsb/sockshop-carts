@@ -88,6 +88,7 @@ import java.time.LocalDateTime;
 
 import io.helidon.examples.sockshop.carts.atpsoda.AtpSodaProducers;
 import com.google.gson.Gson;
+import io.helidon.examples.sockshop.carts.atpsoda.*;
 
 /**
  * An implementation of {@link io.helidon.examples.sockshop.carts.CartRepository}
@@ -149,23 +150,39 @@ public class AtpSodaCartRepository implements CartRepository {
                 OracleDocument filterSpec = this.db.createDocumentFromString("{ \"customerId\" : \"" + customerId + "\"}");
                 System.out.println("filterSpec: -------" + filterSpec.toString());
 
-                oraDoc = col.find().filter(filterSpec).getOne();
+                OracleCursor c = col.find().filter(filterSpec).getCursor();
 
+                try {
+                    OracleDocument resultDoc;
+    
+                    while (c.hasNext()) {
+    
+                        // String orderId, String carrier, String trackingNumber, LocalDate deliveryDate
+                        resultDoc = c.next();
+                        
+                        
+                        Gson gson = new Gson();
+                        cart=gson.fromJson(resultDoc.getContentAsString(), Cart.class);
+                                 if (cart == null) {
+                                    System.out.println("------------INSIDE CART INSERTING START---------------");
+                                        cart = new Cart(customerId);
+                                        OracleDocument doc = db.createDocumentFromString(gson.toJson(cart));
+                                        col.insert(doc);   
+                                        System.out.println("------------INSIDE CART INSERTING END---------------");             	     
+                                    }
+              
+                       
+                        System.out.println("---------------------------");
+                        System.out.println("\n");
+
+                                        }
+                } finally {
+                    // IMPORTANT: YOU MUST CLOSE THE CURSOR TO RELEASE RESOURCES.
+                    if (c != null) c.close();
+                }
                 
        
-                Gson gson = new Gson();
-                cart=gson.fromJson(oraDoc.getContentAsString(), Cart.class);
-                		 if (cart == null) {
-                            System.out.println("------------INSIDE CART INSERTING START---------------");
-                	            cart = new Cart(customerId);
-                	            OracleDocument doc = db.createDocumentFromString(gson.toJson(cart));
-                                col.insert(doc);   
-                                System.out.println("------------INSIDE CART INSERTING END---------------");             	     
-                	        }
-      
-               
-                System.out.println("---------------------------");
-                System.out.println("\n");
+              
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -387,7 +404,16 @@ public class AtpSodaCartRepository implements CartRepository {
     	              
                       OracleDocument filterSpecTarget = this.db.createDocumentFromString("{ \"customerId\" : \"randy\"}");
                       System.out.println("5---------------------------" + filterSpecTarget.toString());
-    	              oraDocTarget = col.find().filter(filterSpecTarget).getOne();
+                      OracleCursor c  = col.find().filter(filterSpecTarget).getCursor();
+                      
+                      try {
+                        OracleDocument resultDoc;
+        
+                        while (c.hasNext()) {
+        
+                            // String orderId, String carrier, String trackingNumber, LocalDate deliveryDate
+                            oraDocTarget = c.next();
+                            
                       System.out.println("6---------------------------" + oraDocTarget.toString());
                       System.out.println("\n");
                       System.out.println("-------------------------------" +gson.toJson(cart));
@@ -397,7 +423,16 @@ public class AtpSodaCartRepository implements CartRepository {
                       System.out.println("8---------------------------");          
     	              System.out.println(resultDoc);
                       System.out.println("9--------------------------");
-    	              return resultDoc;
+                      return resultDoc;
+                      
+                                            }
+                    } finally {
+                        // IMPORTANT: YOU MUST CLOSE THE CURSOR TO RELEASE RESOURCES.
+                        if (c != null) c.close();
+                    }
+
+
+
     	          
 
     	        } catch (Exception e) {
