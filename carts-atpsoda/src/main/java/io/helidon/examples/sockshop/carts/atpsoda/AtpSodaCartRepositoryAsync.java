@@ -36,135 +36,135 @@ import static javax.interceptor.Interceptor.Priority.APPLICATION;
 @Alternative
 @Priority(APPLICATION)
 @Traced
-public class AtpSodaCartRepositoryAsync implements CartRepositoryAsync {
+public class AtpSodaCartRepositoryAsync  {
 
-    private MongoCollection<Cart> carts;
+    // private MongoCollection<Cart> carts;
 
-    @Inject
-    AtpSodaCartRepositoryAsync(MongoCollection<Cart> carts) {
-        this.carts = carts;
-    }
+    // @Inject
+    // AtpSodaCartRepositoryAsync(MongoCollection<Cart> carts) {
+    //     this.carts = carts;
+    // }
 
-    @Override
-    public CompletionStage<Cart> getOrCreateCart(String customerId) {
-        CompletableFuture<Cart> future = new CompletableFuture<>();
-        System.out.println("AtpSodaCartRepositoryAsync - getOrCreateCart()");
-        carts.find(eq("customerId", customerId))
-                .first((cart, t1) -> {
-                    if (t1 != null) future.completeExceptionally(t1);
-                    else if (cart == null) {
-                        cart = new Cart(customerId);
-                        final Cart aCart = cart;
-                        carts.insertOne(cart, (aVoid, t2) -> {
-                            if (t2 != null) future.completeExceptionally(t2);
-                            else future.complete(aCart);
-                        });
-                    }
-                    else future.complete(cart);
-                });
+    // @Override
+    // public CompletionStage<Cart> getOrCreateCart(String customerId) {
+    //     CompletableFuture<Cart> future = new CompletableFuture<>();
+    //     System.out.println("AtpSodaCartRepositoryAsync - getOrCreateCart()");
+    //     carts.find(eq("customerId", customerId))
+    //             .first((cart, t1) -> {
+    //                 if (t1 != null) future.completeExceptionally(t1);
+    //                 else if (cart == null) {
+    //                     cart = new Cart(customerId);
+    //                     final Cart aCart = cart;
+    //                     carts.insertOne(cart, (aVoid, t2) -> {
+    //                         if (t2 != null) future.completeExceptionally(t2);
+    //                         else future.complete(aCart);
+    //                     });
+    //                 }
+    //                 else future.complete(cart);
+    //             });
 
-        return future;
-    }
+    //     return future;
+    // }
 
-    @Override
-    public CompletionStage<Void> deleteCart(String customerId) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        System.out.println("AtpSodaCartRepositoryAsync - deleteCart()");
-        carts.deleteOne(eq("customerId", customerId), (deleteResult, throwable) -> {
-            if (throwable != null) future.completeExceptionally(throwable);
-            else future.complete(null);
-        });
+    // @Override
+    // public CompletionStage<Void> deleteCart(String customerId) {
+    //     CompletableFuture<Void> future = new CompletableFuture<>();
+    //     System.out.println("AtpSodaCartRepositoryAsync - deleteCart()");
+    //     carts.deleteOne(eq("customerId", customerId), (deleteResult, throwable) -> {
+    //         if (throwable != null) future.completeExceptionally(throwable);
+    //         else future.complete(null);
+    //     });
 
-        return future;
-    }
+    //     return future;
+    // }
 
-    @Override
-    public CompletionStage<Boolean> mergeCarts(String targetId, String sourceId) {
-        CompletableFuture<Boolean> future = new CompletableFuture<>();
-        System.out.println("AtpSodaCartRepositoryAsync - mergeCarts()");
-        carts.findOneAndDelete(eq("customerId", sourceId), (source, t1) -> {
-            if (t1 != null) future.completeExceptionally(t1);
-            else if (source != null) {
-                getOrCreateCart(targetId).whenComplete((target, t2) -> {
-                    if (t2 != null) future.completeExceptionally(t2);
-                    else {
-                        target.merge(source);
-                        carts.replaceOne(eq("customerId", targetId), target, (updateResult, t3) -> {
-                            if (t3 != null) future.completeExceptionally(t3);
-                            else future.complete(true);
-                        });
-                    }
-                });
-            }
-            else future.complete(false);
-        });
+    // @Override
+    // public CompletionStage<Boolean> mergeCarts(String targetId, String sourceId) {
+    //     CompletableFuture<Boolean> future = new CompletableFuture<>();
+    //     System.out.println("AtpSodaCartRepositoryAsync - mergeCarts()");
+    //     carts.findOneAndDelete(eq("customerId", sourceId), (source, t1) -> {
+    //         if (t1 != null) future.completeExceptionally(t1);
+    //         else if (source != null) {
+    //             getOrCreateCart(targetId).whenComplete((target, t2) -> {
+    //                 if (t2 != null) future.completeExceptionally(t2);
+    //                 else {
+    //                     target.merge(source);
+    //                     carts.replaceOne(eq("customerId", targetId), target, (updateResult, t3) -> {
+    //                         if (t3 != null) future.completeExceptionally(t3);
+    //                         else future.complete(true);
+    //                     });
+    //                 }
+    //             });
+    //         }
+    //         else future.complete(false);
+    //     });
 
-        return future;
-    }
+    //     return future;
+    // }
 
-    @Override
-    public CompletionStage<List<Item>> getItems(String cartId) {
-        System.out.println("AtpSodaCartRepositoryAsync - getItems()");
-        return getOrCreateCart(cartId).thenApply(Cart::getItems);
-    }
+    // @Override
+    // public CompletionStage<List<Item>> getItems(String cartId) {
+    //     System.out.println("AtpSodaCartRepositoryAsync - getItems()");
+    //     return getOrCreateCart(cartId).thenApply(Cart::getItems);
+    // }
 
-    @Override
-    public CompletionStage<Item> getItem(String cartId, String itemId) {
-        System.out.println("AtpSodaCartRepositoryAsync - getItem()");
-        return getOrCreateCart(cartId).thenApply(cart -> cart.getItem(itemId));
-    }
+    // @Override
+    // public CompletionStage<Item> getItem(String cartId, String itemId) {
+    //     System.out.println("AtpSodaCartRepositoryAsync - getItem()");
+    //     return getOrCreateCart(cartId).thenApply(cart -> cart.getItem(itemId));
+    // }
 
-    @Override
-    public CompletionStage<Item> addItem(String cartId, Item item) {
-        CompletableFuture<Item> future = new CompletableFuture<>();
-        System.out.println("AtpSodaCartRepositoryAsync - addItem()");
-        getOrCreateCart(cartId).whenComplete((cart, t1) -> {
-            if (t1 != null) future.completeExceptionally(t1);
-            else {
-                Item result = cart.add(item);
-                carts.replaceOne(eq("customerId", cartId), cart, (updateResult, t2) -> {
-                    if (t2 != null) future.completeExceptionally(t2);
-                    else future.complete(result);
-                });
-            }
-        });
+    // @Override
+    // public CompletionStage<Item> addItem(String cartId, Item item) {
+    //     CompletableFuture<Item> future = new CompletableFuture<>();
+    //     System.out.println("AtpSodaCartRepositoryAsync - addItem()");
+    //     getOrCreateCart(cartId).whenComplete((cart, t1) -> {
+    //         if (t1 != null) future.completeExceptionally(t1);
+    //         else {
+    //             Item result = cart.add(item);
+    //             carts.replaceOne(eq("customerId", cartId), cart, (updateResult, t2) -> {
+    //                 if (t2 != null) future.completeExceptionally(t2);
+    //                 else future.complete(result);
+    //             });
+    //         }
+    //     });
 
-        return future;
-    }
+    //     return future;
+    // }
 
-    @Override
-    public CompletionStage<Item> updateItem(String cartId, Item item) {
-        CompletableFuture<Item> future = new CompletableFuture<>();
-        System.out.println("AtpSodaCartRepositoryAsync - updateItem()");
-        getOrCreateCart(cartId).whenComplete((cart, t1) -> {
-            if (t1 != null) future.completeExceptionally(t1);
-            else {
-                Item result = cart.update(item);
-                carts.replaceOne(eq("customerId", cartId), cart, (updateResult, t2) -> {
-                    if (t2 != null) future.completeExceptionally(t2);
-                    else future.complete(result);
-                });
-            }
-        });
+    // @Override
+    // public CompletionStage<Item> updateItem(String cartId, Item item) {
+    //     CompletableFuture<Item> future = new CompletableFuture<>();
+    //     System.out.println("AtpSodaCartRepositoryAsync - updateItem()");
+    //     getOrCreateCart(cartId).whenComplete((cart, t1) -> {
+    //         if (t1 != null) future.completeExceptionally(t1);
+    //         else {
+    //             Item result = cart.update(item);
+    //             carts.replaceOne(eq("customerId", cartId), cart, (updateResult, t2) -> {
+    //                 if (t2 != null) future.completeExceptionally(t2);
+    //                 else future.complete(result);
+    //             });
+    //         }
+    //     });
 
-        return future;
-    }
+    //     return future;
+    // }
 
-    @Override
-    public CompletionStage<Void> deleteItem(String cartId, String itemId) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        System.out.println("AtpSodaCartRepositoryAsync - deleteItem()");
-        getOrCreateCart(cartId).whenComplete((cart, t1) -> {
-            if (t1 != null) future.completeExceptionally(t1);
-            else {
-                cart.remove(itemId);
-                carts.replaceOne(eq("customerId", cartId), cart, (updateResult, t2) -> {
-                    if (t2 != null) future.completeExceptionally(t2);
-                    else future.complete(null);
-                });
-            }
-        });
+    // @Override
+    // public CompletionStage<Void> deleteItem(String cartId, String itemId) {
+    //     CompletableFuture<Void> future = new CompletableFuture<>();
+    //     System.out.println("AtpSodaCartRepositoryAsync - deleteItem()");
+    //     getOrCreateCart(cartId).whenComplete((cart, t1) -> {
+    //         if (t1 != null) future.completeExceptionally(t1);
+    //         else {
+    //             cart.remove(itemId);
+    //             carts.replaceOne(eq("customerId", cartId), cart, (updateResult, t2) -> {
+    //                 if (t2 != null) future.completeExceptionally(t2);
+    //                 else future.complete(null);
+    //             });
+    //         }
+    //     });
 
-        return future;
-    }
+    //     return future;
+    // }
 }
