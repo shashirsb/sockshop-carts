@@ -100,13 +100,13 @@ import com.google.gson.Gson;
 @Traced
 public class AtpSodaCartRepository implements CartRepository {
 
-   // private MongoCollection<Cart> carts;
+  
 
     public static AtpSodaProducers asp = new AtpSodaProducers();
     public static OracleDatabase db = asp.dbConnect();
 
     @Inject
-    void AtpSodaShipmentRepository() {
+    void AtpSodaCartRepository() {
         try {
             String UserResponse = createData();
             System.out.println(UserResponse);
