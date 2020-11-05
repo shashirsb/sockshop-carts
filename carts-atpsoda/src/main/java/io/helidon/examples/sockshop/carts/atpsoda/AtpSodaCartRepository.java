@@ -28,7 +28,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static javax.interceptor.Interceptor.Priority.APPLICATION;
 
 ///////////////////
-
+import io.helidon.examples.sockshop.carts.atpsoda.AtpSodaProducers;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -238,6 +238,6 @@ public class AtpSodaCartRepository implements CartRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "successfully created payments collection !!!";
+        return "successfully created carts collection !!!";
     }
 }
