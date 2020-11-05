@@ -152,7 +152,7 @@ public class AtpSodaCartRepository implements CartRepository {
                         
                         
                         Gson gson = new Gson();
-                        cart=gson.fromJson(resultDoc.getContentAsString(), _cart.getClass());
+                        //cart=gson.fromJson(resultDoc.getContentAsString(), Cart.getClass());
                                  if (cart == null) {
                                     System.out.println("------------INSIDE CART INSERTING START---------------");
                                         cart = new Cart(customerId);
