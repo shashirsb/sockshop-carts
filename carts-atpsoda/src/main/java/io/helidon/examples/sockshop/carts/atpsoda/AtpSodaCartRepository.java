@@ -151,14 +151,16 @@ public class AtpSodaCartRepository implements CartRepository {
 
                 oraDoc = col.find().filter(filterSpec).getOne();
 
-                OracleDocument resultDoc;
+                
        
                 Gson gson = new Gson();
-                cart=gson.fromJson(oraDoc.getContentAsString(), Cart.class);
+                cart=gson.fromJson(oraDoc.getContentAsString(), Cart);
                 		 if (cart == null) {
+                            System.out.println("------------INSIDE CART INSERTING START---------------");
                 	            cart = new Cart(customerId);
                 	            OracleDocument doc = db.createDocumentFromString(gson.toJson(cart));
-                	            col.insert(doc);                	     
+                                col.insert(doc);   
+                                System.out.println("------------INSIDE CART INSERTING END---------------");             	     
                 	        }
       
                
@@ -241,7 +243,7 @@ public class AtpSodaCartRepository implements CartRepository {
                 col.find().filter(filterSpec).remove();
                 
                 Gson gson = new Gson();
-                source=gson.fromJson(oraDocSource.getContentAsString(), Cart.class);
+                source=gson.fromJson(oraDocSource.getContentAsString(), Cart);
                 
               if (source != null) {
               target = getOrCreateCart(targetId);
@@ -297,7 +299,8 @@ public class AtpSodaCartRepository implements CartRepository {
         System.out.println("AtpSodaCartRepository - addItem()");
         System.out.println("cartId: " + cartId);
         System.out.println("item: " + item);        
-        Cart cart = getOrCreateCart(cartId);
+        // Cart cart = getOrCreateCart(cartId);
+        Cart cart = getOrCreateCart("randy");
         System.out.println("cart: " + cart);
         Item result = cart.add(item);
         System.out.println("result: " + result);
