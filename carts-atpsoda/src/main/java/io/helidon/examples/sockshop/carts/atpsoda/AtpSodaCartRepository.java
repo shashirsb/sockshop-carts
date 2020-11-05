@@ -382,7 +382,7 @@ public class AtpSodaCartRepository implements CartRepository {
     	            Gson gson = new Gson();             
                     System.out.println("4---------------------------");
     	              
-                      OracleDocument filterSpecTarget = this.db.createDocumentFromString("{ \""+key+"\" : \"" + value + "\"}");
+                      OracleDocument filterSpecTarget = this.db.createDocumentFromString("{ \"customerId\" : \"randy\"}");
                       System.out.println("5---------------------------" + filterSpecTarget.toString());
     	              oraDocTarget = col.find().filter(filterSpecTarget).getOne();
                       System.out.println("6---------------------------" + oraDocTarget.toString());
