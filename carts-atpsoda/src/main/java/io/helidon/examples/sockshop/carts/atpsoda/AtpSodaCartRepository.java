@@ -148,7 +148,7 @@ public class AtpSodaCartRepository implements CartRepository {
             
 
                 OracleDocument filterSpec = this.db.createDocumentFromString("{ \"customerId\" : \"" + customerId + "\"}");
-                System.out.println("filterSpec: -------" + filterSpec.toString());
+                System.out.println("filterSpec: -------" + filterSpec.getContentAsString());
 
                 OracleCursor c = col.find().filter(filterSpec).getCursor();
 
@@ -211,7 +211,7 @@ public class AtpSodaCartRepository implements CartRepository {
             
 
                 OracleDocument filterSpec = this.db.createDocumentFromString("{ \"customerId\" : \"" + customerId + "\"}");
-                System.out.println("filterSpec: -------" + filterSpec.toString());
+                System.out.println("filterSpec: -------" + filterSpec.getContentAsString());
 
                 col.find().filter(filterSpec).remove();
 
@@ -254,7 +254,7 @@ public class AtpSodaCartRepository implements CartRepository {
             Cart source, target = new Cart();            
 
                 OracleDocument filterSpec = this.db.createDocumentFromString("{ \"customerId\" : \"" + sourceId + "\"}");
-                System.out.println("filterSpec: -------" + filterSpec.toString());
+                System.out.println("filterSpec: -------" + filterSpec.getContentAsString());
 
                 oraDocSource = col.find().filter(filterSpec).getOne();
                 col.find().filter(filterSpec).remove();
@@ -317,7 +317,7 @@ public class AtpSodaCartRepository implements CartRepository {
         System.out.println("cartId: " + cartId);
         System.out.println("item: " + item);        
         // Cart cart = getOrCreateCart(cartId);
-        Cart cart = getOrCreateCart("randy");
+        Cart cart = getOrCreateCart(cartId);
         System.out.println("cart: " + cart);
         Item result = cart.add(item);
         System.out.println("result: " + result);
@@ -400,10 +400,10 @@ public class AtpSodaCartRepository implements CartRepository {
     	            OracleDocument oraDocSource, oraDocTarget, newDoc, resultDoc = null;              
                     System.out.println("3---------------------------");
     	            Gson gson = new Gson();             
-                    System.out.println("4---------------------------");
+                    System.out.println("4---------------------------{ \""+key+"\" : \""+value+"\"}");
     	              
-                      OracleDocument filterSpecTarget = this.db.createDocumentFromString("{ \"customerId\" : \"randy\"}");
-                      System.out.println("5---------------------------" + filterSpecTarget.toString());
+                      OracleDocument filterSpecTarget = this.db.createDocumentFromString("{ \""+key+"\" : \""+value+"\"}");
+                      System.out.println("5---------------------------" + filterSpecTarget.getContentAsString());
                       OracleCursor c  = col.find().filter(filterSpecTarget).getCursor();
                       
                       try {
