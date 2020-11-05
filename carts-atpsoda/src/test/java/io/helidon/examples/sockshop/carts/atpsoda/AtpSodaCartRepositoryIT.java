@@ -17,9 +17,10 @@ import static io.helidon.examples.sockshop.carts.atpsoda.AtpSodaProducers.*;
  */
 class AtpSodaCartRepositoryIT extends CartRepositoryTest {
     public CartRepository getCartRepository() {
-        String host = System.getProperty("db.host","localhost");
-        int    port = Integer.parseInt(System.getProperty("db.port","27017"));
+        // String host = System.getProperty("db.host","localhost");
+        // int    port = Integer.parseInt(System.getProperty("db.port","27017"));
 
-        return new AtpSodaCartRepository(carts(db(client(host, port))));
+        // return new AtpSodaCartRepository(carts(db(client(host, port))));
+        return null;
     }
 }
