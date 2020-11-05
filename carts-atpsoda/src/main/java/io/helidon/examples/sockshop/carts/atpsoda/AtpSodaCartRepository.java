@@ -371,29 +371,36 @@ public class AtpSodaCartRepository implements CartRepository {
     	        System.out.println("value: " + value);
     	        
     	 try {
-    	            
+            System.out.println("1---------------------------");
     	            // Get a collection with the name "socks".
     	            // This creates a database table, also named "socks", to store the collection.
     	            OracleCollection col = this.db.admin().createCollection("carts");
-
+                    System.out.println("2---------------------------");
     	            // Find all documents in the collection.
     	            OracleDocument oraDocSource, oraDocTarget, newDoc, resultDoc = null;              
-    	                
+                    System.out.println("3---------------------------");
     	            Gson gson = new Gson();             
-
+                    System.out.println("4---------------------------");
     	              
-    	              OracleDocument filterSpecTarget = this.db.createDocumentFromString("{ \""+key+"\" : \"" + value + "\"}");
+                      OracleDocument filterSpecTarget = this.db.createDocumentFromString("{ \""+key+"\" : \"" + value + "\"}");
+                      System.out.println("5---------------------------" + filterSpecTarget);
     	              oraDocTarget = col.find().filter(filterSpecTarget).getOne();
-    	              
-    	              newDoc =  db.createDocumentFromString(gson.toJson(cart));              
-    	              resultDoc = col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).replaceOneAndGet(newDoc);              
+                      System.out.println("6---------------------------" + oraDocTarget);
+                      System.out.println("\n");
+                      System.out.println("-------------------------------" +gson.toJson(cart));
+                      newDoc =  db.createDocumentFromString(gson.toJson(cart));         
+                      System.out.println("7---------------------------" + newDoc);     
+                      resultDoc = col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).replaceOneAndGet(newDoc);    
+                      System.out.println("8---------------------------");          
     	              System.out.println(resultDoc);
-    	              
+                      System.out.println("9--------------------------");
     	              return resultDoc;
     	          
 
     	        } catch (Exception e) {
-    	            e.printStackTrace();
+                    System.out.println("Exception ---------------------------");
+                    e.printStackTrace();
+                    System.out.println("Exception ---------------------------");
     	        }
     	        
     	        System.out.println("---------------------------");
