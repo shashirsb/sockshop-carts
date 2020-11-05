@@ -102,7 +102,7 @@ import io.helidon.examples.sockshop.carts.atpsoda.*;
 public class AtpSodaCartRepository implements CartRepository {
 
   
-
+    Cart _cart =new Cart();
     public static AtpSodaProducers asp = new AtpSodaProducers();
     public static OracleDatabase db = asp.dbConnect();
 
@@ -123,16 +123,7 @@ public class AtpSodaCartRepository implements CartRepository {
         System.out.println("---------------------------");
         System.out.println("AtpSodaCartRepository - getOrCreateCart()");
         System.out.println("customerId: " + customerId);
-//        Cart cart = carts.find(eq("customerId", customerId)).first();
-//        System.out.println("cart: " + cart);
-//        if (cart == null) {
-//            cart = new Cart(customerId);
-//            carts.insertOne(cart);
-//        }
-        
-//        return cart;
-        
-        
+
         ////////////
         Cart cart =new Cart();
         
@@ -154,14 +145,14 @@ public class AtpSodaCartRepository implements CartRepository {
 
      
                     
-                    if (resultDoc !=  null) {
+                    // if (resultDoc !=  null) {
     
                         // String orderId, String carrier, String trackingNumber, LocalDate deliveryDate
                     
                         
                         
                         Gson gson = new Gson();
-                        cart=gson.fromJson(resultDoc.getContentAsString(), Cart.class);
+                        cart=gson.fromJson(resultDoc.getContentAsString(), _cart.getClass());
                                  if (cart == null) {
                                     System.out.println("------------INSIDE CART INSERTING START---------------");
                                         cart = new Cart(customerId);
@@ -174,7 +165,7 @@ public class AtpSodaCartRepository implements CartRepository {
                         System.out.println("---------------------------");
                         System.out.println("\n");
 
-                                        }
+                                        // }
             
                 
        
@@ -226,17 +217,6 @@ public class AtpSodaCartRepository implements CartRepository {
         System.out.println("AtpSodaCartRepository - mergeCarts()");
         System.out.println("targetId: " + targetId);
         System.out.println("sourceId: " + sourceId);
-//        Cart source = carts.findOneAndDelete(eq("customerId", sourceId));
-//        System.out.println("source: " + source);
-//        if (source != null) {
-//            Cart target = getOrCreateCart(targetId);
-//            target.merge(source);
-//            carts.replaceOne(eq("customerId", targetId), target);
-//            return true;
-//        }
-//        System.out.println("---------------------------");
-//        System.out.println("\n");
-//        return false;
         
  try {
             
@@ -256,7 +236,7 @@ public class AtpSodaCartRepository implements CartRepository {
                 col.find().filter(filterSpec).remove();
                 
                 Gson gson = new Gson();
-                source=gson.fromJson(oraDocSource.getContentAsString(), Cart.class);
+                source=gson.fromJson(oraDocSource.getContentAsString(), _cart.getClass());
                 
               if (source != null) {
               target = getOrCreateCart(targetId);
