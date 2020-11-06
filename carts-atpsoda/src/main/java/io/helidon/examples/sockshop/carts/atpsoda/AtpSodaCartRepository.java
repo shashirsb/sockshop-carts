@@ -270,7 +270,7 @@ public class AtpSodaCartRepository implements CartRepository {
 			if (oraDocSource != null) {
 
 				JSONParser parser = new JSONParser();
-                Object obj = parser.parse(resultDoc.getContentAsString());
+                Object obj = parser.parse(oraDocSource.getContentAsString());
                 System.out.println("--------INSIDE UPDATING THE RECORD START --------------");
                 System.out.println(resultDoc.getContentAsString());
 				JSONObject jsonObject = (JSONObject) obj;
