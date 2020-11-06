@@ -472,13 +472,13 @@ public class AtpSodaCartRepository implements CartRepository {
 				objitems.put("unitPrice", item.unitPrice);
 				arrayitems.add(objitems);
 			}
-
+            System.out.println( arrayitems.toString());
 			String _document = "{\"customerId\":" + objCustomerId.toString() + ",\"items\":" + arrayitems.toString()
 					+ "}";
 
-			newDoc = db.createDocumentFromString(_document);
+			newDoc = this.db.createDocumentFromString(_document);
 
-			System.out.println("7---------------------------" + newDoc.toString());
+			System.out.println("7---------------------------" + newDoc.getContentAsString());
 			System.out.println(oraDocTarget.getKey().toString());
 			System.out.println(oraDocTarget.getVersion().toString());
 			resultDoc = col.insertAndGet(newDoc);
