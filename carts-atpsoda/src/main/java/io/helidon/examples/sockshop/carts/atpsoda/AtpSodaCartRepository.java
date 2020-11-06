@@ -139,8 +139,7 @@ public class AtpSodaCartRepository implements CartRepository {
 
 			resultDoc = col.find().filter(filterSpec).getOne();
 
-			if (resultDoc.getContentAsString() != null || resultDoc.getContentAsString() != ""
-					|| resultDoc.getContentAsString() != "{}") {
+			if (resultDoc != null ) {
 
 				JSONParser parser = new JSONParser();
 				Object obj = parser.parse(resultDoc.getContentAsString());
@@ -263,8 +262,7 @@ public class AtpSodaCartRepository implements CartRepository {
 			oraDocSource = col.find().filter(filterSpec).getOne();
 			col.find().filter(filterSpec).remove();
 
-			if (oraDocSource.getContentAsString() != null || oraDocSource.getContentAsString() != ""
-					|| oraDocSource.getContentAsString() != "{}") {
+			if (oraDocSource != null ) {
 
 				resultDoc = oraDocSource;
 				JSONParser parser = new JSONParser();
