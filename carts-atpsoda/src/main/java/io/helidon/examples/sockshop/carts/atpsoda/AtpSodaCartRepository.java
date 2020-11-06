@@ -138,7 +138,7 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println("filterSpec: -------" + filterSpec.getContentAsString());
 
 			resultDoc = col.find().filter(filterSpec).getOne();
-			System.out.println("resultDoc: -------" + resultDoc.getContentAsString());
+			// System.out.println("resultDoc: -------" + resultDoc.getContentAsString());
 			System.out.println(resultDoc.equals(null));
 
 			if (resultDoc != null) {
