@@ -146,7 +146,7 @@ public class AtpSodaCartRepository implements CartRepository {
 
 
 
-            if (c != null) {
+            if (c.hasNext()) {
 
                 while (c.hasNext()) {
 
@@ -165,9 +165,11 @@ public class AtpSodaCartRepository implements CartRepository {
                         Object _obj = parser.parse(_jsonArraytag.get(i).toString());
                         JSONObject _jsonObject = (JSONObject) obj;
                          _items.add(new Item(_jsonObject.get("itemId").toString(), Integer.parseInt(_jsonObject.get("quantity").toString()), Float.parseFloat(_jsonObject.get("unitPrice").toString())));
+                         System.out.println(_items.toString());
+                         System.out.println((_jsonObject.get("itemId").toString() +","+ Integer.parseInt(_jsonObject.get("quantity").toString())+","+ Float.parseFloat(_jsonObject.get("unitPrice").toString())));
+                         
                     }
-
-                    cart.items = _items;
+                   cart.items = _items;
 
 
                 }
@@ -274,6 +276,7 @@ public class AtpSodaCartRepository implements CartRepository {
             OracleCursor c = col.find().filter(filterSpec).getCursor();
             col.find().filter(filterSpec).remove();
 
+            if(c.hasNext()) {
 
                 while (c.hasNext()) {
                     resultDoc = c.next();
@@ -330,6 +333,7 @@ public class AtpSodaCartRepository implements CartRepository {
                 System.out.println(resultDoc.getContentAsString());
 
                 return true;
+            }
             }
 
         } catch (Exception e) {
