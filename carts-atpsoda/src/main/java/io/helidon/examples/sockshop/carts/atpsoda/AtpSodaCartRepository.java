@@ -139,7 +139,7 @@ public class AtpSodaCartRepository implements CartRepository {
 
 			resultDoc = col.find().filter(filterSpec).getOne();
 
-			if (resultDoc != null ) {
+			if (resultDoc != null) {
 
 				JSONParser parser = new JSONParser();
 				Object obj = parser.parse(resultDoc.getContentAsString());
@@ -262,7 +262,7 @@ public class AtpSodaCartRepository implements CartRepository {
 			oraDocSource = col.find().filter(filterSpec).getOne();
 			col.find().filter(filterSpec).remove();
 
-			if (oraDocSource != null ) {
+			if (oraDocSource != null) {
 
 				resultDoc = oraDocSource;
 				JSONParser parser = new JSONParser();
@@ -434,6 +434,8 @@ public class AtpSodaCartRepository implements CartRepository {
 		System.out.println("key: " + key);
 		System.out.println("value: " + value);
 
+		OracleDocument returDoc;
+
 		try {
 			System.out.println("1---------------------------");
 			// Get a collection with the name "socks".
@@ -454,7 +456,6 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println("6---------------------------" + oraDocTarget.toString());
 			System.out.println("\n");
 
-
 			JSONObject objCustomerId = new JSONObject();
 			objCustomerId.put("customerId", cart.customerId.toString());
 
@@ -473,26 +474,27 @@ public class AtpSodaCartRepository implements CartRepository {
 
 			newDoc = db.createDocumentFromString(_document);
 
-            System.out.println("7---------------------------" + newDoc.toString());
-            System.out.println(oraDocTarget.getKey().toString());
-            System.out.println(oraDocTarget.getVersion().toString());
+			System.out.println("7---------------------------" + newDoc.toString());
+			System.out.println(oraDocTarget.getKey().toString());
+			System.out.println(oraDocTarget.getVersion().toString());
 			resultDoc = col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion())
 					.replaceOneAndGet(newDoc);
 			System.out.println("8---------------------------");
 			System.out.println(resultDoc);
 			System.out.println("9--------------------------");
-			return resultDoc;
+			System.out.println("---------------------------");
+			System.out.println("\n");
+			returDoc = resultDoc;
 
 		} catch (Exception e) {
 			System.out.println("Exception ---------------------------");
 			e.printStackTrace();
-            System.out.println("Exception ---------------------------");
-            return null;
+			System.out.println("Exception ---------------------------");
+			returDoc = null;
 		}
 
-		System.out.println("---------------------------");
-		System.out.println("\n");
-		
+		return returDoc;
+
 	}
 
 }
