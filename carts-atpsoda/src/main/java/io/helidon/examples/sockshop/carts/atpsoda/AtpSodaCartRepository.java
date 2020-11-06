@@ -139,14 +139,14 @@ public class AtpSodaCartRepository implements CartRepository {
 
 			resultDoc = col.find().filter(filterSpec).getOne();
 			// System.out.println("resultDoc: -------" + resultDoc.getContentAsString());
-			//System.out.println(resultDoc.equals(null));
+			// System.out.println(resultDoc.equals(null));
 
 			if (resultDoc != null) {
 
 				JSONParser parser = new JSONParser();
-                Object obj = parser.parse(resultDoc.getContentAsString());
-                System.out.println("--------INSIDE UPDATING THE RECORD START --------------");
-                System.out.println(resultDoc.getContentAsString());
+				Object obj = parser.parse(resultDoc.getContentAsString());
+				System.out.println("--------INSIDE UPDATING THE RECORD START --------------");
+				System.out.println(resultDoc.getContentAsString());
 				JSONObject jsonObject = (JSONObject) obj;
 				cart.customerId = jsonObject.get("customerId").toString();
 				JSONArray _jsonArrayItems = (JSONArray) jsonObject.get("items");
@@ -169,7 +169,7 @@ public class AtpSodaCartRepository implements CartRepository {
 				}
 				cart.items = _items;
 
-                System.out.println("--------INSIDE UPDATING THE RECORD END --------------");
+				System.out.println("--------INSIDE UPDATING THE RECORD END --------------");
 			} else {
 
 				System.out.println("------------INSIDE CART INSERTING START---------------");
@@ -270,9 +270,9 @@ public class AtpSodaCartRepository implements CartRepository {
 			if (oraDocSource != null) {
 
 				JSONParser parser = new JSONParser();
-                Object obj = parser.parse(oraDocSource.getContentAsString());
-                System.out.println("--------INSIDE UPDATING THE RECORD START --------------");
-                System.out.println(resultDoc.getContentAsString());
+				Object obj = parser.parse(oraDocSource.getContentAsString());
+				System.out.println("--------INSIDE MERGING THE RECORD START --------------");
+				System.out.println(oraDocSource.getContentAsString());
 				JSONObject jsonObject = (JSONObject) obj;
 				source.customerId = jsonObject.get("customerId").toString();
 				JSONArray _jsonArrayItems = (JSONArray) jsonObject.get("items");
@@ -349,9 +349,9 @@ public class AtpSodaCartRepository implements CartRepository {
 		System.out.println("cartId: " + cartId);
 		System.out.println("---------------------------");
 		System.out.println("\n");
-        Cart cart = getOrCreateCart(cartId);
-        System.out.print(cart.toString());
-        System.out.print(cart.getItems().toString());
+		Cart cart = getOrCreateCart(cartId);
+		System.out.print(cart.toString());
+		System.out.print(cart.getItems().toString());
 		return cart.getItems();
 	}
 
@@ -483,9 +483,8 @@ public class AtpSodaCartRepository implements CartRepository {
 				objitems.put("unitPrice", item.unitPrice);
 				arrayitems.add(objitems);
 			}
-            System.out.println( arrayitems.toString());
-			String _document = "{\"customerId\": \"" + value + "\",\"items\":" + arrayitems.toString()
-					+ "}";
+			System.out.println(arrayitems.toString());
+			String _document = "{\"customerId\": \"" + value + "\",\"items\":" + arrayitems.toString() + "}";
 
 			newDoc = this.db.createDocumentFromString(_document);
 
@@ -493,9 +492,9 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println(oraDocTarget.getKey().toString());
 			System.out.println(oraDocTarget.getVersion().toString());
 			resultDoc = col.insertAndGet(newDoc);
-	
-                col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).remove();
-                System.out.println("Deleted old document");
+
+			col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).remove();
+			System.out.println("Deleted old document");
 
 			System.out.println("8---------------------------");
 			System.out.println(resultDoc);
