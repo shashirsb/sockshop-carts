@@ -32,14 +32,14 @@ public class Cart implements Serializable {
      */
     @Id
     @Schema(description = "Customer identifier")
-    private String customerId;
+    public String customerId;
 
     /**
      * The items in the cart.
      */
     @JsonbTransient
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Item> items = new ArrayList<>();
+    public List<Item> items = new ArrayList<>();
 
     /**
      * Default constructor.
