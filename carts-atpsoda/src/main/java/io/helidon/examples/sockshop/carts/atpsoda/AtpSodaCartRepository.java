@@ -144,18 +144,20 @@ public class AtpSodaCartRepository implements CartRepository {
 			if (resultDoc != null) {
 
 				JSONParser parser = new JSONParser();
-				Object obj = parser.parse(resultDoc.getContentAsString());
+                Object obj = parser.parse(resultDoc.getContentAsString());
+                System.out.println("--------INSIDE UPDATING THE RECORD START --------------");
+                System.out.println(resultDoc.getContentAsString());
 				JSONObject jsonObject = (JSONObject) obj;
 				cart.customerId = jsonObject.get("customerId").toString();
-				JSONArray _jsonArraytag = (JSONArray) jsonObject.get("items");
+				JSONArray _jsonArrayItems = (JSONArray) jsonObject.get("items");
 
 				List<Item> _items = new ArrayList<>();
 
 				// Item(itemId=819e1fbf-8b7e-4f6d-811f-693534916a8b, quantity=1, unitPrice=14.0)
 
-				for (int i = 0; i < _jsonArraytag.size(); i++) {
-					Object _obj = parser.parse(_jsonArraytag.get(i).toString());
-					JSONObject _jsonObject = (JSONObject) obj;
+				for (int i = 0; i < _jsonArrayItems.size(); i++) {
+					Object _obj = parser.parse(_jsonArrayItems.get(i).toString());
+					JSONObject _jsonObject = (JSONObject) _obj;
 					_items.add(new Item(_jsonObject.get("itemId").toString(),
 							Integer.parseInt(_jsonObject.get("quantity").toString()),
 							Float.parseFloat(_jsonObject.get("unitPrice").toString())));
@@ -167,6 +169,7 @@ public class AtpSodaCartRepository implements CartRepository {
 				}
 				cart.items = _items;
 
+                System.out.println("--------INSIDE UPDATING THE RECORD END --------------");
 			} else {
 
 				System.out.println("------------INSIDE CART INSERTING START---------------");
