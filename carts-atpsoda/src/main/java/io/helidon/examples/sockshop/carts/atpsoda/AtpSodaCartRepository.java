@@ -473,7 +473,7 @@ public class AtpSodaCartRepository implements CartRepository {
 				arrayitems.add(objitems);
 			}
             System.out.println( arrayitems.toString());
-			String _document = "{\"customerId\", \"" + value + "\",\"items\":" + arrayitems.toString()
+			String _document = "{\"customerId\": \"" + value + "\",\"items\":" + arrayitems.toString()
 					+ "}";
 
 			newDoc = this.db.createDocumentFromString(_document);
