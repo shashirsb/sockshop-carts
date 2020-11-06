@@ -473,7 +473,7 @@ public class AtpSodaCartRepository implements CartRepository {
 				arrayitems.add(objitems);
 			}
             System.out.println( arrayitems.toString());
-			String _document = "{\"customerId\":" + objCustomerId.toString() + ",\"items\":" + arrayitems.toString()
+			String _document = "{\"customerId\", \"" + value + "\",\"items\":" + arrayitems.toString()
 					+ "}";
 
 			newDoc = this.db.createDocumentFromString(_document);
@@ -483,7 +483,8 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println(oraDocTarget.getVersion().toString());
 			resultDoc = col.insertAndGet(newDoc);
 			if (resultDoc.getContentAsString() != null) {
-				col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).remove();
+                col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).remove();
+                System.out.println("Deleted old document");
 			}
 			System.out.println("8---------------------------");
 			System.out.println(resultDoc);
