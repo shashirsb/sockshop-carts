@@ -271,10 +271,10 @@ public class AtpSodaCartRepository implements CartRepository {
 
 				JSONParser parser = new JSONParser();
                 Object obj = parser.parse(resultDoc.getContentAsString());
-                System.out.println("--------INSIDE MERGING THE RECORD START --------------");
+                System.out.println("--------INSIDE UPDATING THE RECORD START --------------");
                 System.out.println(resultDoc.getContentAsString());
 				JSONObject jsonObject = (JSONObject) obj;
-				cart.customerId = jsonObject.get("customerId").toString();
+				source.customerId = jsonObject.get("customerId").toString();
 				JSONArray _jsonArrayItems = (JSONArray) jsonObject.get("items");
 
 				List<Item> _items = new ArrayList<>();
