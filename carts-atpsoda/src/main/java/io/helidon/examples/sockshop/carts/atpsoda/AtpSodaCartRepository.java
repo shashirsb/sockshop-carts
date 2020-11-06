@@ -441,7 +441,7 @@ public class AtpSodaCartRepository implements CartRepository {
 			OracleCollection col = this.db.admin().createCollection("carts");
 			System.out.println("2---------------------------");
 			// Find all documents in the collection.
-			OracleDocument oraDocSource, oraDocTarget, newDoc, resultDoc = null;
+			OracleDocument oraDocTarget, newDoc, resultDoc = null;
 			System.out.println("3---------------------------");
 
 			System.out.println("4---------------------------{ \"" + key + "\" : \"" + value + "\"}");
@@ -454,9 +454,6 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println("6---------------------------" + oraDocTarget.toString());
 			System.out.println("\n");
 
-			JSONParser parser = new JSONParser();
-			Object obj = parser.parse(oraDocTarget.getContentAsString());
-			JSONObject jsonObject = (JSONObject) obj;
 
 			JSONObject objCustomerId = new JSONObject();
 			objCustomerId.put("customerId", cart.customerId.toString());
@@ -476,7 +473,9 @@ public class AtpSodaCartRepository implements CartRepository {
 
 			newDoc = db.createDocumentFromString(_document);
 
-			System.out.println("7---------------------------" + newDoc.toString());
+            System.out.println("7---------------------------" + newDoc.toString());
+            System.out.println(oraDocTarget.getKey().toString());
+            System.out.println(oraDocTarget.getVersion().toString());
 			resultDoc = col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion())
 					.replaceOneAndGet(newDoc);
 			System.out.println("8---------------------------");
@@ -487,12 +486,13 @@ public class AtpSodaCartRepository implements CartRepository {
 		} catch (Exception e) {
 			System.out.println("Exception ---------------------------");
 			e.printStackTrace();
-			System.out.println("Exception ---------------------------");
+            System.out.println("Exception ---------------------------");
+            return null;
 		}
 
 		System.out.println("---------------------------");
 		System.out.println("\n");
-		return null;
+		
 	}
 
 }
