@@ -242,7 +242,7 @@ public class AtpSodaCartRepository implements CartRepository {
         System.out.println("AtpSodaCartRepository - mergeCarts()");
         System.out.println("targetId: " + targetId);
         System.out.println("sourceId: " + sourceId);
-
+      
 
         // Cart source = carts.findOneAndDelete(eq("customerId", sourceId));
         // if (source != null) {
@@ -258,11 +258,13 @@ public class AtpSodaCartRepository implements CartRepository {
             // Get a collection with the name "socks".
             // This creates a database table, also named "socks", to store the collection.
             OracleCollection col = this.db.admin().createCollection("carts");
+      
 
             // Find all documents in the collection.
             OracleDocument oraDocSource, oraDocTarget, newDoc, resultDoc = null;
             String jsonFormattedString = null;
-            Cart source, target = new Cart();
+            Cart source = new Cart();
+            Cart target = new Cart();
 
             OracleDocument filterSpec = this.db.createDocumentFromString("{ \"customerId\" : \"" + sourceId + "\"}");
             System.out.println("filterSpec: -------" + filterSpec.getContentAsString());           
