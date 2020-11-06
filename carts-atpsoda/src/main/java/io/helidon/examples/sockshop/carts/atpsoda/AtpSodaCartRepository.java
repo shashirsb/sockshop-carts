@@ -305,9 +305,6 @@ public class AtpSodaCartRepository implements CartRepository {
 
 					obj = parser.parse(oraDocTarget.getContentAsString());
 
-					JSONObject objCustomerId = new JSONObject();
-					objCustomerId.put("customerId", target.customerId.toString());
-
 					JSONArray arrayitems = new JSONArray();
 					Collection<Item> items = target.items;
 					for (Item item : items) {
@@ -318,13 +315,18 @@ public class AtpSodaCartRepository implements CartRepository {
 						arrayitems.add(objitems);
 					}
 
-					String _document = "{\"customerId\":" + objCustomerId.toString() + ",\"items\":"
-							+ arrayitems.toString() + "}";
+					String _document = "{\"customerId\": \"" + targetId + "\",\"items\":" + arrayitems.toString() + "}";
 
-					newDoc = db.createDocumentFromString(_document);
+					newDoc = this.db.createDocumentFromString(_document);
 
-					resultDoc = col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion())
-							.replaceOneAndGet(newDoc);
+                    System.out.println("7---------------------------" + newDoc.getContentAsString());
+                    System.out.println(oraDocTarget.getKey().toString());
+                    System.out.println(oraDocTarget.getVersion().toString());
+                    resultDoc = col.insertAndGet(newDoc);
+
+                    col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).remove();
+                    System.out.println("Deleted old document");
+        
 
 					System.out.println(resultDoc.getContentAsString());
 
