@@ -138,6 +138,8 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println("filterSpec: -------" + filterSpec.getContentAsString());
 
 			resultDoc = col.find().filter(filterSpec).getOne();
+			System.out.println("resultDoc: -------" + resultDoc.getContentAsString());
+			System.out.println(resultDoc.equals(null));
 
 			if (resultDoc != null) {
 
@@ -368,7 +370,7 @@ public class AtpSodaCartRepository implements CartRepository {
 		System.out.println("result: " + result);
 
 		OracleDocument outputDoc = this.replaceOne("customerId", cartId, cart);
-		System.out.println(outputDoc);
+		System.out.println("outputDoc :" + outputDoc);
 		System.out.println("---------------------------");
 		System.out.println("\n");
 		return result;
@@ -390,7 +392,7 @@ public class AtpSodaCartRepository implements CartRepository {
 		System.out.println("\n");
 		// carts.replaceOne(eq("customerId", cartId), cart);
 		OracleDocument outputDoc = this.replaceOne("customerId", cartId, cart);
-		System.out.println(outputDoc);
+		System.out.println("outputDoc :" + outputDoc);
 
 		return result;
 	}
@@ -409,7 +411,7 @@ public class AtpSodaCartRepository implements CartRepository {
 		// carts.replaceOne(eq("customerId", cartId), cart);
 
 		OracleDocument outputDoc = this.replaceOne("customerId", cartId, cart);
-		System.out.println(outputDoc);
+		System.out.println("outputDoc :" + outputDoc);
 	}
 
 	public String createData() {
@@ -453,11 +455,13 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println("5---------------------------" + filterSpecTarget.getContentAsString());
 			oraDocTarget = col.find().filter(filterSpecTarget).getOne();
 
-			System.out.println("6---------------------------" + oraDocTarget.toString());
+			System.out.println("6---------------------------" + oraDocTarget.getContentAsString());
+			System.out.println("6---------------------------" + oraDocTarget.getKey());
+			System.out.println("6---------------------------" + oraDocTarget.getVersion());
 			System.out.println("\n");
 
 			JSONObject objCustomerId = new JSONObject();
-			objCustomerId.put("customerId", cart.customerId.toString());
+			objCustomerId.put("customerId", "\"" + value + "\"");
 
 			JSONArray arrayitems = new JSONArray();
 			Collection<Item> items = cart.items;
@@ -477,8 +481,10 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println("7---------------------------" + newDoc.toString());
 			System.out.println(oraDocTarget.getKey().toString());
 			System.out.println(oraDocTarget.getVersion().toString());
-			resultDoc = col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion())
-					.replaceOneAndGet(newDoc);
+			resultDoc = col.insertAndGet(newDoc);
+			if (resultDoc.getContentAsString() != null) {
+				col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).remove();
+			}
 			System.out.println("8---------------------------");
 			System.out.println(resultDoc);
 			System.out.println("9--------------------------");
