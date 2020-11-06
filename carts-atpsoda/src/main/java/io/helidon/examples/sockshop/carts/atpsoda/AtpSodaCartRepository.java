@@ -340,8 +340,10 @@ public class AtpSodaCartRepository implements CartRepository {
 		System.out.println("cartId: " + cartId);
 		System.out.println("---------------------------");
 		System.out.println("\n");
-		Cart cart = new Cart();
-		return getOrCreateCart(cartId).getItems();
+        Cart cart = getOrCreateCart(cartId);
+        System.out.print(cart.toString());
+        System.out.print(cart.getItems().toString());
+		return cart.getItems();
 	}
 
 	@Override
@@ -482,10 +484,10 @@ public class AtpSodaCartRepository implements CartRepository {
 			System.out.println(oraDocTarget.getKey().toString());
 			System.out.println(oraDocTarget.getVersion().toString());
 			resultDoc = col.insertAndGet(newDoc);
-			if (resultDoc.getContentAsString() != null) {
+	
                 col.find().key(oraDocTarget.getKey()).version(oraDocTarget.getVersion()).remove();
                 System.out.println("Deleted old document");
-			}
+
 			System.out.println("8---------------------------");
 			System.out.println(resultDoc);
 			System.out.println("9--------------------------");
