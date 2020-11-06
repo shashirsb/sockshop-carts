@@ -269,23 +269,29 @@ public class AtpSodaCartRepository implements CartRepository {
 
 			if (oraDocSource != null) {
 
-				resultDoc = oraDocSource;
 				JSONParser parser = new JSONParser();
-				Object obj = parser.parse(resultDoc.getContentAsString());
+                Object obj = parser.parse(resultDoc.getContentAsString());
+                System.out.println("--------INSIDE MERGING THE RECORD START --------------");
+                System.out.println(resultDoc.getContentAsString());
 				JSONObject jsonObject = (JSONObject) obj;
-				source.customerId = jsonObject.get("customerId").toString();
-				JSONArray _jsonArraytag = (JSONArray) jsonObject.get("items");
+				cart.customerId = jsonObject.get("customerId").toString();
+				JSONArray _jsonArrayItems = (JSONArray) jsonObject.get("items");
 
 				List<Item> _items = new ArrayList<>();
 
 				// Item(itemId=819e1fbf-8b7e-4f6d-811f-693534916a8b, quantity=1, unitPrice=14.0)
 
-				for (int i = 0; i < _jsonArraytag.size(); i++) {
-					Object _obj = parser.parse(_jsonArraytag.get(i).toString());
-					JSONObject _jsonObject = (JSONObject) obj;
+				for (int i = 0; i < _jsonArrayItems.size(); i++) {
+					Object _obj = parser.parse(_jsonArrayItems.get(i).toString());
+					JSONObject _jsonObject = (JSONObject) _obj;
 					_items.add(new Item(_jsonObject.get("itemId").toString(),
 							Integer.parseInt(_jsonObject.get("quantity").toString()),
 							Float.parseFloat(_jsonObject.get("unitPrice").toString())));
+					System.out.println(_items.toString());
+					System.out.println((_jsonObject.get("itemId").toString() + ","
+							+ Integer.parseInt(_jsonObject.get("quantity").toString()) + ","
+							+ Float.parseFloat(_jsonObject.get("unitPrice").toString())));
+
 				}
 				source.items = _items;
 
