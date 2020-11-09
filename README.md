@@ -6,17 +6,10 @@ The Shopping Cart Service is implemented as a multi-module project containing th
 domain model, the REST service itself, as well as the data repository abstraction and its 
 in-memory implementation;
 
-2. **[carts-coherence](./carts-coherence)** contains the data repository implementation for 
-Coherence backend
+2. **[carts-atpsoda](./carts-atpsoda)** contains the data repository implementation for 
+Oracle ATP JSON (Soda) backend backend
 
-3. **[carts-mongo](./carts-mongo)** contains the data repository implementation for MongoDB 
-backend
 
-4. **[carts-mysql](./carts-mysql)** contains the data repository implementation for MySQL 
-backend (using JPA)
-
-5. **[carts-redis](./carts-redis)** contains the data repository implementation for Redis 
-backend (using Redisson client)
 
 ## API
 
